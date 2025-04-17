@@ -5,6 +5,7 @@
         "./typedoc.theme.jsonc"
     ],
     "entryPointStrategy": "packages",
+    "out": "./docs/packages",
     "entryPoints": [
         "archive",
         "assert"

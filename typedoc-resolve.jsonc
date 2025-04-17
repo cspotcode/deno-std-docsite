@@ -4,6 +4,8 @@
         "./typedoc.base.jsonc",
         "./typedoc.theme.jsonc"
     ],
+    "entryPointStrategy": "resolve",
+    "out": "./docs/resolve",
     "entryPoints": [
         "archive/mod.ts",
         "assert/mod.ts",
