@@ -5,9 +5,16 @@ APIs: `Deno.`, `@std/`, and supported Web APIs.
 
 Currently focused on `@std`.
 
+[View the experiment](https://cspotcode.com/deno-std-docsite)
+
 ## To build locally
 
 Use the `justfile`.
+
+Docs build into `./docs` which can be checked out as a worktree of the
+`gh-pages` branch.
+
+`gh-pages` is configured to render by Github Pages.
 
 ## TODOs
 
