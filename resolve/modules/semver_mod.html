@@ -1,0 +1,216 @@
+<!DOCTYPE html><html class="default" lang="en"><head><style>body { visibility: hidden; }</style><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="IE=edge"><title>semver/mod | Documentation</title><meta name="description" content="Documentation for Documentation"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/highlight.css"><script defer="" src="../assets/main.js"></script><script async="" src="../assets/icons.js" id="tsd-icons-script"></script><link rel="stylesheet" href="../assets/dmt/dmt-components.css"><link rel="stylesheet" href="../assets/dmt/dmt-theme.css"><script src="../assets/dmt/dmt-components.js" type="module"></script><noscript><style>body { visibility: visible; }</style></noscript></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";</script><div class="overlay"></div>
+<main><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base=".."><div class="field" id="dmt-search-main"></div><div class="field" id="dmt-toolbar"><a href="../index.html" class="title">Documentation</a></div></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main" tabindex="-1"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"></ul><div class="dmt-title-header-flex"><h1>Module semver/mod</h1></div></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><p>The Semantic Version parser.</p>
+<p>Adapted directly from <a href="https://github.com/npm/node-semver">semver</a>.</p>
+<pre><code class="ts"><span class="hl-7">import</span><span class="hl-2"> {</span><br><span class="hl-2">  </span><span class="hl-8">parse</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">parseRange</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">greaterThan</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">lessThan</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">format</span><br><span class="hl-2">} </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/semver"</span><span class="hl-2">;</span><br><span class="hl-7">import</span><span class="hl-2"> { </span><span class="hl-8">assertEquals</span><span class="hl-2"> } </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/assert"</span><span class="hl-2">;</span><br><br><span class="hl-11">const</span><span class="hl-2"> </span><span class="hl-14">semver</span><span class="hl-2"> = </span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-6">"1.2.3"</span><span class="hl-2">);</span><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-8">semver</span><span class="hl-2">, {</span><br><span class="hl-2">  </span><span class="hl-8">major:</span><span class="hl-2"> </span><span class="hl-13">1</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">minor:</span><span class="hl-2"> </span><span class="hl-13">2</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">patch:</span><span class="hl-2"> </span><span class="hl-13">3</span><span class="hl-2">,</span><br><span class="hl-2">  </span><span class="hl-8">prerelease:</span><span class="hl-2"> [],</span><br><span class="hl-2">  </span><span class="hl-8">build:</span><span class="hl-2"> []</span><br><span class="hl-2">});</span><br><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">format</span><span class="hl-2">(</span><span class="hl-8">semver</span><span class="hl-2">), </span><span class="hl-6">"1.2.3"</span><span class="hl-2">);</span><br><br><span class="hl-11">const</span><span class="hl-2"> </span><span class="hl-14">range</span><span class="hl-2"> = </span><span class="hl-9">parseRange</span><span class="hl-2">(</span><span class="hl-6">"1.x || &gt;=2.5.0 || 5.0.0 - 7.2.3"</span><span class="hl-2">);</span><br><br><span class="hl-11">const</span><span class="hl-2"> </span><span class="hl-14">s0</span><span class="hl-2"> = </span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-6">"1.2.3"</span><span class="hl-2">);</span><br><span class="hl-11">const</span><span class="hl-2"> </span><span class="hl-14">s1</span><span class="hl-2"> = </span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-6">"9.8.7"</span><span class="hl-2">);</span><br><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">greaterThan</span><span class="hl-2">(</span><span class="hl-8">s0</span><span class="hl-2">, </span><span class="hl-8">s1</span><span class="hl-2">), </span><span class="hl-11">false</span><span class="hl-2">);</span><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">lessThan</span><span class="hl-2">(</span><span class="hl-8">s0</span><span class="hl-2">, </span><span class="hl-8">s1</span><span class="hl-2">), </span><span class="hl-11">true</span><span class="hl-2">);</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:versions" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Versions<a href="#md:versions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>A "version" is described by the <code>v2.0.0</code> specification found at
+<a href="https://semver.org" target="_blank" class="external">https://semver.org</a>.</p>
+<p>A leading <code>"="</code> or <code>"v"</code> character is stripped off and ignored.</p>
+<a id="md:format" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Format<a href="#md:format" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Semantic versions can be formatted as strings, by default they
+are formatted as <code>full</code>. Below is a diagram showing the various
+formatting options.</p>
+<pre><code><span class="hl-2">          </span><span class="hl-8">full</span><br><span class="hl-2">       ┌───┴───┐</span><br><span class="hl-2">    </span><span class="hl-8">release</span><span class="hl-2">    │</span><br><span class="hl-2">   ┌───┴───┐   │</span><br><span class="hl-8">primary</span><span class="hl-2">    │   │</span><br><span class="hl-2"> ┌─┴─┐     │   │</span><br><span class="hl-2"> </span><span class="hl-13">1.2</span><span class="hl-2">.</span><span class="hl-13">3</span><span class="hl-2">-</span><span class="hl-8">pre</span><span class="hl-2">.</span><span class="hl-13">1</span><span class="hl-2">+</span><span class="hl-8">b</span><span class="hl-2">.</span><span class="hl-13">1</span><br><span class="hl-2"> │ │ │ └─┬─┘ └┬┘</span><br><span class="hl-2"> │ │ │   │    └── </span><span class="hl-8">build</span><br><span class="hl-2"> │ │ │   └─────── </span><span class="hl-8">pre</span><br><span class="hl-2"> │ │ └─────────── </span><span class="hl-8">patch</span><br><span class="hl-2"> │ └───────────── </span><span class="hl-8">minor</span><br><span class="hl-2"> └─────────────── </span><span class="hl-8">major</span>
+</code><button>Copy</button></pre>
+
+<a id="md:ranges" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Ranges<a href="#md:ranges" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>A version <a href="../types/semver_mod.Range.html" class="tsd-kind-type-alias"><code>Range</code></a> is a set of <a href="../interfaces/semver_mod.Comparator.html" class="tsd-kind-interface"><code>Comparator</code></a>s which specify
+versions that satisfy the range.</p>
+<p>A <a href="../interfaces/semver_mod.Comparator.html" class="tsd-kind-interface"><code>Comparator</code></a> is composed of an <a href="../types/semver_mod.Operator.html" class="tsd-kind-type-alias"><code>Operator</code></a> and a
+<a href="../interfaces/semver_mod.SemVer.html" class="tsd-kind-interface">SemVer</a>. The set of primitive <code>operators</code> is:</p>
+<ul>
+<li><code>&lt;</code> Less than</li>
+<li><code>&lt;=</code> Less than or equal to</li>
+<li><code>&gt;</code> Greater than</li>
+<li><code>&gt;=</code> Greater than or equal to</li>
+<li><code>=</code> Equal. If no operator is specified, then equality is assumed, so this
+operator is optional, but MAY be included.</li>
+</ul>
+<p>For example, the comparator <code>&gt;=1.2.7</code> would match the versions <code>1.2.7</code>, <code>1.2.8</code>,
+<code>2.5.3</code>, and <code>1.3.9</code>, but not the versions <code>1.2.6</code> or <code>1.1.0</code>.</p>
+<p>Comparators can be joined by whitespace to form a <code>comparator set</code>, which is
+satisfied by the <strong>intersection</strong> of all of the comparators it includes.</p>
+<p>A range is composed of one or more comparator sets, joined by <code>||</code>. A version
+matches a range if and only if every comparator in at least one of the
+<code>||</code>-separated comparator sets is satisfied by the version.</p>
+<p>For example, the range <code>&gt;=1.2.7 &lt;1.3.0</code> would match the versions <code>1.2.7</code>,
+<code>1.2.8</code>, and <code>1.2.99</code>, but not the versions <code>1.2.6</code>, <code>1.3.0</code>, or <code>1.1.0</code>.</p>
+<p>The range <code>1.2.7 || &gt;=1.2.9 &lt;2.0.0</code> would match the versions <code>1.2.7</code>, <code>1.2.9</code>,
+and <code>1.4.6</code>, but not the versions <code>1.2.8</code> or <code>2.0.0</code>.</p>
+<a id="md:prerelease-tags" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Prerelease Tags<a href="#md:prerelease-tags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>If a version has a prerelease tag (for example, <code>1.2.3-alpha.3</code>) then it will
+only be allowed to satisfy comparator sets if at least one comparator with the
+same <code>[major, minor, patch]</code> tuple also has a prerelease tag.</p>
+<p>For example, the range <code>&gt;1.2.3-alpha.3</code> would be allowed to match the version
+<code>1.2.3-alpha.7</code>, but it would <em>not</em> be satisfied by <code>3.4.5-alpha.9</code>, even though
+<code>3.4.5-alpha.9</code> is technically "greater than" <code>1.2.3-alpha.3</code> according to the
+SemVer sort rules. The version range only accepts prerelease tags on the <code>1.2.3</code>
+version. The version <code>3.4.5</code> <em>would</em> satisfy the range, because it does not have
+a prerelease flag, and <code>3.4.5</code> is greater than <code>1.2.3-alpha.7</code>.</p>
+<p>The purpose for this behavior is twofold. First, prerelease versions frequently
+are updated very quickly, and contain many breaking changes that are (by the
+author"s design) not yet fit for public consumption. Therefore, by default, they
+are excluded from range matching semantics.</p>
+<p>Second, a user who has opted into using a prerelease version has clearly
+indicated the intent to use <em>that specific</em> set of alpha/beta/rc versions. By
+including a prerelease tag in the range, the user is indicating that they are
+aware of the risk. However, it is still not appropriate to assume that they have
+opted into taking a similar risk on the <em>next</em> set of prerelease versions.</p>
+<a id="md:prerelease-identifiers" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Prerelease Identifiers<a href="#md:prerelease-identifiers" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The method <a href="../functions/semver_mod.increment.html" class="tsd-kind-function"><code>increment</code></a> takes an additional <code>identifier</code> string
+argument that will append the value of the string as a prerelease identifier:</p>
+<pre><code class="ts"><span class="hl-7">import</span><span class="hl-2"> { </span><span class="hl-8">increment</span><span class="hl-2">, </span><span class="hl-8">parse</span><span class="hl-2"> } </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/semver"</span><span class="hl-2">;</span><br><span class="hl-7">import</span><span class="hl-2"> { </span><span class="hl-8">assertEquals</span><span class="hl-2"> } </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/assert"</span><span class="hl-2">;</span><br><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">increment</span><span class="hl-2">(</span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-6">"1.2.3"</span><span class="hl-2">), </span><span class="hl-6">"prerelease"</span><span class="hl-2">, { </span><span class="hl-8">prerelease:</span><span class="hl-2"> </span><span class="hl-6">"alpha"</span><span class="hl-2"> }), </span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-6">"1.2.4-alpha.0"</span><span class="hl-2">));</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:build-metadata" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Build Metadata<a href="#md:build-metadata" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Build metadata is <code>.</code> delimited alpha-numeric string.
+When parsing a version it is retained on the <code>build: string[]</code> field
+of the SemVer instance. When incrementing there is an additional parameter that
+can set the build metadata on the SemVer instance.</p>
+<a id="md:advanced-range-syntax" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Advanced Range Syntax<a href="#md:advanced-range-syntax" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Advanced range syntax desugars to primitive comparators in deterministic ways.</p>
+<p>Advanced ranges may be combined in the same way as primitive comparators using
+white space or <code>||</code>.</p>
+<a id="md:hyphen-ranges-xyz---abc" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Hyphen Ranges <code>X.Y.Z - A.B.C</code><a href="#md:hyphen-ranges-xyz---abc" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Specifies an inclusive set.</p>
+<ul>
+<li><code>1.2.3 - 2.3.4</code> := <code>&gt;=1.2.3 &lt;=2.3.4</code></li>
+</ul>
+<p>If a partial version is provided as the first version in the inclusive range,
+then the missing pieces are replaced with zeroes.</p>
+<ul>
+<li><code>1.2 - 2.3.4</code> := <code>&gt;=1.2.0 &lt;=2.3.4</code></li>
+</ul>
+<p>If a partial version is provided as the second version in the inclusive range,
+then all versions that start with the supplied parts of the tuple are accepted,
+but nothing that would be greater than the provided tuple parts.</p>
+<ul>
+<li><code>1.2.3 - 2.3</code> := <code>&gt;=1.2.3 &lt;2.4.0</code></li>
+<li><code>1.2.3 - 2</code> := <code>&gt;=1.2.3 &lt;3.0.0</code></li>
+</ul>
+<a id="md:x-ranges-12x-1x-12-" class="tsd-anchor"></a><h4 class="tsd-anchor-link">X-Ranges <code>1.2.x</code> <code>1.X</code> <code>1.2.*</code> <code>*</code><a href="#md:x-ranges-12x-1x-12-" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Any of <code>X</code>, <code>x</code>, or <code>*</code> may be used to "stand in" for one of the numeric values
+in the <code>[major, minor, patch]</code> tuple.</p>
+<ul>
+<li><code>*</code> := <code>&gt;=0.0.0</code> (Any version satisfies)</li>
+<li><code>1.x</code> := <code>&gt;=1.0.0 &lt;2.0.0</code> (Matching major version)</li>
+<li><code>1.2.x</code> := <code>&gt;=1.2.0 &lt;1.3.0</code> (Matching major and minor versions)</li>
+</ul>
+<p>A partial version range is treated as an X-Range, so the special character is in
+fact optional.</p>
+<ul>
+<li><code>""</code> (empty string) := <code>*</code> := <code>&gt;=0.0.0</code></li>
+<li><code>1</code> := <code>1.x.x</code> := <code>&gt;=1.0.0 &lt;2.0.0</code></li>
+<li><code>1.2</code> := <code>1.2.x</code> := <code>&gt;=1.2.0 &lt;1.3.0</code></li>
+</ul>
+<a id="md:tilde-ranges-123-12-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Tilde Ranges <code>~1.2.3</code> <code>~1.2</code> <code>~1</code><a href="#md:tilde-ranges-123-12-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Allows patch-level changes if a minor version is specified on the comparator.
+Allows minor-level changes if not.</p>
+<ul>
+<li><code>~1.2.3</code> := <code>&gt;=1.2.3 &lt;1.(2+1).0</code> := <code>&gt;=1.2.3 &lt;1.3.0</code></li>
+<li><code>~1.2</code> := <code>&gt;=1.2.0 &lt;1.(2+1).0</code> := <code>&gt;=1.2.0 &lt;1.3.0</code> (Same as <code>1.2.x</code>)</li>
+<li><code>~1</code> := <code>&gt;=1.0.0 &lt;(1+1).0.0</code> := <code>&gt;=1.0.0 &lt;2.0.0</code> (Same as <code>1.x</code>)</li>
+<li><code>~0.2.3</code> := <code>&gt;=0.2.3 &lt;0.(2+1).0</code> := <code>&gt;=0.2.3 &lt;0.3.0</code></li>
+<li><code>~0.2</code> := <code>&gt;=0.2.0 &lt;0.(2+1).0</code> := <code>&gt;=0.2.0 &lt;0.3.0</code> (Same as <code>0.2.x</code>)</li>
+<li><code>~0</code> := <code>&gt;=0.0.0 &lt;(0+1).0.0</code> := <code>&gt;=0.0.0 &lt;1.0.0</code> (Same as <code>0.x</code>)</li>
+<li><code>~1.2.3-beta.2</code> := <code>&gt;=1.2.3-beta.2 &lt;1.3.0</code> Note that prereleases in the
+<code>1.2.3</code> version will be allowed, if they are greater than or equal to
+<code>beta.2</code>. So, <code>1.2.3-beta.4</code> would be allowed, but <code>1.2.4-beta.2</code> would not,
+because it is a prerelease of a different <code>[major, minor, patch]</code> tuple.</li>
+</ul>
+<a id="md:caret-ranges-123-025-004" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Caret Ranges <code>^1.2.3</code> <code>^0.2.5</code> <code>^0.0.4</code><a href="#md:caret-ranges-123-025-004" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Allows changes that do not modify the left-most non-zero element in the
+<code>[major, minor, patch]</code> tuple. In other words, this allows patch and minor
+updates for versions <code>1.0.0</code> and above, patch updates for versions
+<code>0.X &gt;=0.1.0</code>, and <em>no</em> updates for versions <code>0.0.X</code>.</p>
+<p>Many authors treat a <code>0.x</code> version as if the <code>x</code> were the major
+"breaking-change" indicator.</p>
+<p>Caret ranges are ideal when an author may make breaking changes between <code>0.2.4</code>
+and <code>0.3.0</code> releases, which is a common practice. However, it presumes that
+there will <em>not</em> be breaking changes between <code>0.2.4</code> and <code>0.2.5</code>. It allows for
+changes that are presumed to be additive (but non-breaking), according to
+commonly observed practices.</p>
+<ul>
+<li><code>^1.2.3</code> := <code>&gt;=1.2.3 &lt;2.0.0</code></li>
+<li><code>^0.2.3</code> := <code>&gt;=0.2.3 &lt;0.3.0</code></li>
+<li><code>^0.0.3</code> := <code>&gt;=0.0.3 &lt;0.0.4</code></li>
+<li><code>^1.2.3-beta.2</code> := <code>&gt;=1.2.3-beta.2 &lt;2.0.0</code> Note that prereleases in the
+<code>1.2.3</code> version will be allowed, if they are greater than or equal to
+<code>beta.2</code>. So, <code>1.2.3-beta.4</code> would be allowed, but <code>1.2.4-beta.2</code> would not,
+because it is a prerelease of a different <code>[major, minor, patch]</code> tuple.</li>
+<li><code>^0.0.3-beta</code> := <code>&gt;=0.0.3-beta &lt;0.0.4</code> Note that prereleases in the <code>0.0.3</code>
+version <em>only</em> will be allowed, if they are greater than or equal to <code>beta</code>.
+So, <code>0.0.3-pr.2</code> would be allowed.</li>
+</ul>
+<p>When parsing caret ranges, a missing <code>patch</code> value desugars to the number <code>0</code>,
+but will allow flexibility within that value, even if the major and minor
+versions are both <code>0</code>.</p>
+<ul>
+<li><code>^1.2.x</code> := <code>&gt;=1.2.0 &lt;2.0.0</code></li>
+<li><code>^0.0.x</code> := <code>&gt;=0.0.0 &lt;0.1.0</code></li>
+<li><code>^0.0</code> := <code>&gt;=0.0.0 &lt;0.1.0</code></li>
+</ul>
+<p>A missing <code>minor</code> and <code>patch</code> values will desugar to zero, but also allow
+flexibility within those values, even if the major version is zero.</p>
+<ul>
+<li><code>^1.x</code> := <code>&gt;=1.0.0 &lt;2.0.0</code></li>
+<li><code>^0.x</code> := <code>&gt;=0.0.0 &lt;1.0.0</code></li>
+</ul>
+<a id="md:range-grammar" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Range Grammar<a href="#md:range-grammar" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Putting all this together, here is a Backus-Naur grammar for ranges, for the
+benefit of parser authors:</p>
+<pre><code class="bnf">range-set  ::= range ( logical-or range ) *
+logical-or ::= ( " " ) * "||" ( " " ) *
+range      ::= hyphen | simple ( " " simple ) * | ""
+hyphen     ::= partial " - " partial
+simple     ::= primitive | partial | tilde | caret
+primitive  ::= ( "&lt;" | "&gt;" | "&gt;=" | "&lt;=" | "=" ) partial
+partial    ::= xr ( "." xr ( "." xr qualifier ? )? )?
+xr         ::= "x" | "X" | "*" | nr
+nr         ::= "0" | ["1"-"9"] ( ["0"-"9"] ) *
+tilde      ::= "~" partial
+caret      ::= "^" partial
+qualifier  ::= ( "-" pre )? ( "+" build )?
+pre        ::= parts
+build      ::= parts
+parts      ::= part ( "." part ) *
+part       ::= nr | [-0-9A-Za-z]+
+</code><button type="button">Copy</button></pre>
+
+<p>Note that, since ranges may be non-contiguous, a version might not be greater
+than a range, less than a range, <em>or</em> satisfy a range! For example, the range
+<code>1.2 &lt;1.2.9 || &gt;2.0.0</code> would have a hole from <code>1.2.9</code> until <code>2.0.0</code>, so the
+version <code>1.2.10</code> would not be greater than the range (because <code>2.0.1</code> satisfies,
+which is higher), nor less than the range (since <code>1.2.8</code> satisfies, which is
+lower), and it also does not satisfy the range.</p>
+<p>If you want to know if a version satisfies or does not satisfy a range, use the
+<a href="../functions/semver_mod.satisfies.html" class="tsd-kind-function"><code>satisfies</code></a> function.</p>
+</div><div class="tsd-comment tsd-typography"></div></section><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/denoland/std/blob/5f299ca4f9a33b8bb9d4371452879b56989f3e19/semver/mod.ts#L1">semver/mod.ts:1</a></li></ul></aside><section class="tsd-panel-group tsd-index-group"><section class="tsd-panel tsd-index-panel"><details class="tsd-index-content tsd-accordion dmt-index-content">
+            <summary class="tsd-accordion-summary tsd-index-summary" data-key="index">
+               <h3 class="tsd-index-heading uppercase">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-chevronSmall"></use></svg> Index
+               </h3>
+            </summary>
+            <div class="tsd-accordion-details">
+            <section class="tsd-index-section"><h3 class="tsd-index-heading">Interfaces</h3><div class="tsd-index-list"><a href="../interfaces/semver_mod.Comparator.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-256"></use></svg><span>Comparator</span></a>
+<a href="../interfaces/semver_mod.IncrementOptions.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-256"></use></svg><span>Increment<wbr>Options</span></a>
+<a href="../interfaces/semver_mod.SemVer.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-256"></use></svg><span>Sem<wbr>Ver</span></a>
+</div></section><section class="tsd-index-section"><h3 class="tsd-index-heading">Type Aliases</h3><div class="tsd-index-list"><a href="../types/semver_mod.Operator.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2097152"></use></svg><span>Operator</span></a>
+<a href="../types/semver_mod.Range.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2097152"></use></svg><span>Range</span></a>
+<a href="../types/semver_mod.ReleaseType.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2097152"></use></svg><span>Release<wbr>Type</span></a>
+</div></section><section class="tsd-index-section"><h3 class="tsd-index-heading">Functions</h3><div class="tsd-index-list"><a href="../functions/semver_mod.canParse.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>can<wbr>Parse</span></a>
+<a href="../functions/semver_mod.compare.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>compare</span></a>
+<a href="../functions/semver_mod.difference.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>difference</span></a>
+<a href="../functions/semver_mod.equals.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>equals</span></a>
+<a href="../functions/semver_mod.format.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>format</span></a>
+<a href="../functions/semver_mod.formatRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>format<wbr>Range</span></a>
+<a href="../functions/semver_mod.greaterOrEqual.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>greater<wbr>Or<wbr>Equal</span></a>
+<a href="../functions/semver_mod.greaterThan.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>greater<wbr>Than</span></a>
+<a href="../functions/semver_mod.greaterThanRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>greater<wbr>Than<wbr>Range</span></a>
+<a href="../functions/semver_mod.increment.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>increment</span></a>
+<a href="../functions/semver_mod.isRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>is<wbr>Range</span></a>
+<a href="../functions/semver_mod.isSemVer.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>is<wbr>Sem<wbr>Ver</span></a>
+<a href="../functions/semver_mod.lessOrEqual.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>less<wbr>Or<wbr>Equal</span></a>
+<a href="../functions/semver_mod.lessThan.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>less<wbr>Than</span></a>
+<a href="../functions/semver_mod.lessThanRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>less<wbr>Than<wbr>Range</span></a>
+<a href="../functions/semver_mod.maxSatisfying.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>max<wbr>Satisfying</span></a>
+<a href="../functions/semver_mod.minSatisfying.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>min<wbr>Satisfying</span></a>
+<a href="../functions/semver_mod.notEquals.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>not<wbr>Equals</span></a>
+<a href="../functions/semver_mod.parse.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>parse</span></a>
+<a href="../functions/semver_mod.parseRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>parse<wbr>Range</span></a>
+<a href="../functions/semver_mod.rangeIntersects.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>range<wbr>Intersects</span></a>
+<a href="../functions/semver_mod.satisfies.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>satisfies</span></a>
+<a href="../functions/semver_mod.tryParse.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>try<wbr>Parse</span></a>
+<a href="../functions/semver_mod.tryParseRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>try<wbr>Parse<wbr>Range</span></a>
+</div></section></div>
+         </details></section></section></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked=""><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open="" class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details" tabindex="-1"><a href="#md:versions"><span>Versions</span></a><a href="#md:format"><span>Format</span></a><a href="#md:ranges"><span>Ranges</span></a><ul><li><a href="#md:prerelease-tags"><span>Prerelease <wbr>Tags</span></a></li><li><ul><li><a href="#md:prerelease-identifiers"><span>Prerelease <wbr>Identifiers</span></a></li></ul></li><li><a href="#md:build-metadata"><span>Build <wbr>Metadata</span></a></li><li><a href="#md:advanced-range-syntax"><span>Advanced <wbr>Range <wbr>Syntax</span></a></li><li><ul><li><a href="#md:hyphen-ranges-xyz---abc"><span>Hyphen <wbr>Ranges <wbr>X.<wbr>Y.<wbr>Z -<wbr> <wbr>A.<wbr>B.C</span></a></li><li><a href="#md:x-ranges-12x-1x-12-"><span>X-<wbr>Ranges 1.2.x 1.<wbr>X 1.2.* *</span></a></li><li><a href="#md:tilde-ranges-123-12-1"><span>Tilde <wbr>Ranges ~1.2.3 ~1.2 ~1</span></a></li><li><a href="#md:caret-ranges-123-025-004"><span>Caret <wbr>Ranges ^1.2.3 ^0.2.5 ^0.0.4</span></a></li></ul></li><li><a href="#md:range-grammar"><span>Range <wbr>Grammar</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>Documentation</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a> with the <a href="https://www.npmjs.com/package/@typhonjs-typedoc/typedoc-theme-dmt" target="_blank">Default Modern Theme</a></p></footer></main></body></html>

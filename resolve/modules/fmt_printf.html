@@ -1,0 +1,261 @@
+<!DOCTYPE html><html class="default" lang="en"><head><style>body { visibility: hidden; }</style><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="IE=edge"><title>fmt/printf | Documentation</title><meta name="description" content="Documentation for Documentation"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/highlight.css"><script defer="" src="../assets/main.js"></script><script async="" src="../assets/icons.js" id="tsd-icons-script"></script><link rel="stylesheet" href="../assets/dmt/dmt-components.css"><link rel="stylesheet" href="../assets/dmt/dmt-theme.css"><script src="../assets/dmt/dmt-components.js" type="module"></script><noscript><style>body { visibility: visible; }</style></noscript></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";</script><div class="overlay"></div>
+<main><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base=".."><div class="field" id="dmt-search-main"></div><div class="field" id="dmt-toolbar"><a href="../index.html" class="title">Documentation</a></div></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main" tabindex="-1"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"></ul><div class="dmt-title-header-flex"><h1>Module fmt/printf</h1></div></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><p><a href="../functions/fmt_printf.sprintf.html" class="tsd-kind-function"><code>sprintf</code></a> and <a href="../functions/fmt_printf.printf.html" class="tsd-kind-function"><code>printf</code></a> for printing formatted strings to
+stdout.</p>
+<pre><code class="ts"><span class="hl-7">import</span><span class="hl-2"> { </span><span class="hl-8">sprintf</span><span class="hl-2"> } </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/fmt/printf"</span><span class="hl-2">;</span><br><span class="hl-7">import</span><span class="hl-2"> { </span><span class="hl-8">assertEquals</span><span class="hl-2"> } </span><span class="hl-7">from</span><span class="hl-2"> </span><span class="hl-6">"@std/assert"</span><span class="hl-2">;</span><br><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">sprintf</span><span class="hl-2">(</span><span class="hl-6">"%d"</span><span class="hl-2">, </span><span class="hl-13">9</span><span class="hl-2">), </span><span class="hl-6">"9"</span><span class="hl-2">);</span><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">sprintf</span><span class="hl-2">(</span><span class="hl-6">"%o"</span><span class="hl-2">, </span><span class="hl-13">9</span><span class="hl-2">), </span><span class="hl-6">"11"</span><span class="hl-2">);</span><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">sprintf</span><span class="hl-2">(</span><span class="hl-6">"%f"</span><span class="hl-2">, </span><span class="hl-13">4</span><span class="hl-2">), </span><span class="hl-6">"4.000000"</span><span class="hl-2">);</span><br><span class="hl-9">assertEquals</span><span class="hl-2">(</span><span class="hl-9">sprintf</span><span class="hl-2">(</span><span class="hl-6">"%.3f"</span><span class="hl-2">, </span><span class="hl-13">0.9999</span><span class="hl-2">), </span><span class="hl-6">"1.000"</span><span class="hl-2">);</span>
+</code><button type="button">Copy</button></pre>
+
+<p>This implementation is inspired by POSIX and Golang but does not port
+implementation code.</p>
+<p>sprintf converts and formats a variable number of arguments as is specified
+by a <code>format string</code>. In it's basic form, a format string may just be a
+literal. In case arguments are meant to be formatted, a <code>directive</code> is
+contained in the format string, preceded by a '%' character:</p>
+<pre><code>%&lt;verb&gt;
+</code></pre>
+<p>E.g. the verb <code>s</code> indicates the directive should be replaced by the string
+representation of the argument in the corresponding position of the argument
+list. E.g.:</p>
+<pre><code>Hello %s!
+</code></pre>
+<p>applied to the arguments "World" yields "Hello World!".</p>
+<p>The meaning of the format string is modelled after <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/fprintf.html" target="_blank" class="external">POSIX</a> format strings
+as well as well as <a href="https://golang.org/pkg/fmt/" target="_blank" class="external">Golang format strings</a>. Both contain elements specific
+to the respective programming language that don't apply to JavaScript, so
+they can not be fully supported. Furthermore we implement some functionality
+that is specific to JS.</p>
+<a id="md:verbs" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Verbs<a href="#md:verbs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The following verbs are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>print a literal percent</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>evaluate arg as boolean, print <code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>eval as number, print binary</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>eval as number, print character corresponding to the codePoint</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td>eval as number, print octal</td>
+</tr>
+<tr>
+<td><code>x X</code></td>
+<td>print as hex (ff FF), treat string as list of bytes</td>
+</tr>
+<tr>
+<td><code>e E</code></td>
+<td>print number in scientific/exponent format 1.123123e+01</td>
+</tr>
+<tr>
+<td><code>f F</code></td>
+<td>print number as float with decimal point and no exponent</td>
+</tr>
+<tr>
+<td><code>g G</code></td>
+<td>use %e %E or %f %F depending on size of argument</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>interpolate string</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>type of arg, as returned by <code>typeof</code></td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td>value of argument in 'default' format (see below)</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>argument as formatted by <code>JSON.stringify</code></td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>argument as formatted by <code>Deno.inspect</code></td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>argument as formatted by <code>Deno.inspect</code> in compact format</td>
+</tr>
+</tbody>
+</table>
+<a id="md:width-and-precision" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Width and Precision<a href="#md:width-and-precision" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Verbs may be modified by providing them with width and precision, either or
+both may be omitted:</p>
+<pre><code>%9f    width 9, default precision
+%.9f   default width, precision 9
+%8.9f  width 8, precision 9
+%8.f   width 8, precision 0
+</code></pre>
+<p>In general, 'width' describes the minimum length of the output, while
+'precision' limits the output.</p>
+<table>
+<thead>
+<tr>
+<th>verb</th>
+<th>precision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>b c o</code></td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>x X</code></td>
+<td>n/a for number, strings are truncated to p bytes(!)</td>
+</tr>
+<tr>
+<td><code>e E f F</code></td>
+<td>number of places after decimal, default 6</td>
+</tr>
+<tr>
+<td><code>g G</code></td>
+<td>set maximum number of digits</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>truncate input</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>truncate</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td>truncate, or depth if used with # see "'default' format", below</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>Numerical values for width and precision can be substituted for the <code>*</code> char,
+in which case the values are obtained from the next args, e.g.:</p>
+<pre><code>sprintf("%*.*f", 9, 8, 456.0)
+</code></pre>
+<p>is equivalent to:</p>
+<pre><code>sprintf("%9.8f", 456.0)
+</code></pre>
+<a id="md:flags" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Flags<a href="#md:flags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The effects of the verb may be further influenced by using flags to modify
+the directive:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Verb</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>numeric</td>
+<td>always print sign</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>all</td>
+<td>pad to the right (left justify)</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td></td>
+<td>alternate format</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td><code>b o x X</code></td>
+<td>prefix with <code>0b 0 0x</code></td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td><code>g G</code></td>
+<td>don't remove trailing zeros</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td><code>v</code></td>
+<td>use output of <code>inspect</code> instead of <code>toString</code></td>
+</tr>
+<tr>
+<td><code>' '</code></td>
+<td></td>
+<td>space character</td>
+</tr>
+<tr>
+<td><code>' '</code></td>
+<td><code>x X</code></td>
+<td>leave spaces between bytes when printing string</td>
+</tr>
+<tr>
+<td><code>' '</code></td>
+<td><code>d</code></td>
+<td>insert space for missing <code>+</code> sign character</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td>all</td>
+<td>pad with zero, <code>-</code> takes precedence, sign is appended in front of padding</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>all</td>
+<td>format elements of the passed array according to the directive (extension)</td>
+</tr>
+</tbody>
+</table>
+<a id="md:default-format" class="tsd-anchor"></a><h2 class="tsd-anchor-link">'default' format<a href="#md:default-format" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The default format used by <code>%v</code> is the result of calling <code>toString()</code> on the
+relevant argument. If the <code>#</code> flags is used, the result of calling <code>inspect()</code>
+is interpolated. In this case, the precision, if set is passed to <code>inspect()</code>
+as the 'depth' config parameter.</p>
+<a id="md:positional-arguments" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Positional arguments<a href="#md:positional-arguments" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Arguments do not need to be consumed in the order they are provided and may
+be consumed more than once. E.g.:</p>
+<pre><code>sprintf("%[2]s %[1]s", "World", "Hello")
+</code></pre>
+<p>returns "Hello World". The presence of a positional indicator resets the arg
+counter allowing args to be reused:</p>
+<pre><code>sprintf("dec[%d]=%d hex[%[1]d]=%x oct[%[1]d]=%#o %s", 1, 255, "Third")
+</code></pre>
+<p>returns <code>dec[1]=255 hex[1]=0xff oct[1]=0377 Third</code></p>
+<p>Width and precision my also use positionals:</p>
+<pre><code>"%[2]*.[1]*d", 1, 2
+</code></pre>
+<p>This follows the golang conventions and not POSIX.</p>
+<a id="md:errors" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Errors<a href="#md:errors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The following errors are handled:</p>
+<p>Incorrect verb:</p>
+<pre><code>S("%h", "") %!(BAD VERB 'h')
+</code></pre>
+<p>Too few arguments:</p>
+<pre><code>S("%d") %!(MISSING 'd')"
+</code></pre>
+</div><div class="tsd-comment tsd-typography"></div></section><aside class="tsd-sources"><ul><li>Defined in <a href="https://github.com/denoland/std/blob/5f299ca4f9a33b8bb9d4371452879b56989f3e19/fmt/printf.ts#L1">fmt/printf.ts:1</a></li></ul></aside><section class="tsd-panel-group tsd-index-group"><section class="tsd-panel tsd-index-panel"><details class="tsd-index-content tsd-accordion dmt-index-content">
+            <summary class="tsd-accordion-summary tsd-index-summary" data-key="index">
+               <h3 class="tsd-index-heading uppercase">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-chevronSmall"></use></svg> Index
+               </h3>
+            </summary>
+            <div class="tsd-accordion-details">
+            <section class="tsd-index-section"><h3 class="tsd-index-heading">Functions</h3><div class="tsd-index-list"><a href="../functions/fmt_printf.printf.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>printf</span></a>
+<a href="../functions/fmt_printf.sprintf.html" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-64"></use></svg><span>sprintf</span></a>
+</div></section></div>
+         </details></section></section></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked=""><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open="" class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details" tabindex="-1"><a href="#md:verbs"><span>Verbs</span></a><a href="#md:width-and-precision"><span>Width and <wbr>Precision</span></a><a href="#md:flags"><span>Flags</span></a><a href="#md:default-format"><span>'default' format</span></a><a href="#md:positional-arguments"><span>Positional arguments</span></a><a href="#md:errors"><span>Errors</span></a></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>Documentation</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a> with the <a href="https://www.npmjs.com/package/@typhonjs-typedoc/typedoc-theme-dmt" target="_blank">Default Modern Theme</a></p></footer></main></body></html>
