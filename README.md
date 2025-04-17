@@ -1,3 +1,26 @@
+# Deno `@std` docsite
+
+An experiment to build a single, searchable docsite for all of Deno's "core"
+APIs: `Deno.`, `@std/`, and supported Web APIs.
+
+Currently focused on `@std`.
+
+## To build locally
+
+Use the `justfile`.
+
+## TODOs
+
+- [ ] Migrate deno.json workspaces to package.json workspaces 1-to-1, see if
+      typedoc natively supports that.
+- [ ] Move to nicer typedoc boxes theme when it's finished.
+- [ ] Render `@types/deno` docs.
+- [ ] Render (or link to?) supported Web APIs.
+- [ ] finish "packages" render by adding missing `package.json`s to every
+      package.
+
+---
+
 # Deno Standard Library
 
 [![JSR @std](https://jsr.io/badges/@std)](https://jsr.io/@std)

@@ -1,0 +1,6 @@
+{
+    // Base flags for all typedoc configs
+    "$schema": "https://typedoc.org/schema.json",
+    "skipErrorChecking": true,
+    "projectDocuments": [],
+}

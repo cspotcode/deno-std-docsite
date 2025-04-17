@@ -1,0 +1,6 @@
+{
+    "name": "@std/archive",
+    "exports": {
+        ".": "./mod.ts"
+    }
+}

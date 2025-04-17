@@ -1,0 +1,11 @@
+{
+    // Note: I would like to replace this theme with typedoc's old theme once it is fully resurrected.
+    // See also: Discord discussion, links to WIP branch:
+    // https://discord.com/channels/508357248330760243/829307039447515176/1349067479736909884
+    // https://github.com/Gerrit0/typedoc-theme-boxes
+    "$schema": "https://typedoc.org/schema.json",
+    "plugin": [
+        "@typhonjs-typedoc/typedoc-theme-dmt"
+    ],
+    "theme": "default-modern"
+}

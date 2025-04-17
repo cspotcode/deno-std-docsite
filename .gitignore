@@ -21,3 +21,6 @@ codecov.SHA256SUM.sig
 .vim
 _tmp/
 !_tmp/.keep
+
+# Added for deno-std-docsite
+node_modules/

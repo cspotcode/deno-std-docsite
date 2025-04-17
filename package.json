@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "@types/deno": "latest",
+        "@typhonjs-typedoc/typedoc-theme-dmt": "latest"
+    }
+}

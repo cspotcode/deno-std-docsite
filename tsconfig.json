@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "target": "ESNext",
+        "module": "NodeNext",
+        "allowImportingTsExtensions": true,
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "paths": {
+            "@std/assert": [
+                "./assert/mod.ts"
+            ],
+            "@std/internal": [
+                "./internal/mod.ts"
+            ],
+            "@std/internal/*": [
+                "./internal/*.ts",
+                "./internal/*"
+            ],
+            "@std/internal/build-message": [
+                "./internal/build_message.ts",
+            ],
+            "@std/internal/diff-str": [
+                "./internal/diff_str.ts",
+            ],
+            "@std/semver": [
+                "./semver/mod.ts"
+            ],
+            "@std/testing": [
+                "./testing/mod.ts"
+            ],
+            "@std/testing/*": [
+                "./testing/*.ts",
+                "./testing/*"
+            ]
+        }
+    },
+}

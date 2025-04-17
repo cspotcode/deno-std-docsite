@@ -1,0 +1,13 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "extends": [
+        "./typedoc.base.jsonc",
+        "./typedoc.theme.jsonc"
+    ],
+    "entryPointStrategy": "packages",
+    "entryPoints": [
+        "archive",
+        "assert"
+        // TODO add the rest, but this requires each to have a proper package.json, and I haven't created those all yet.
+    ],
+}
