@@ -14,6 +14,10 @@ export PATH := justfile_dir() + '/node_modules/.bin' + PATH_SEP + env_var('PATH'
 # Currently experimenting with two different approaches to docs rendering:
 # Typedoc's "resolve" and "packages" strategies.
 
+init:
+    # Checkout gh-pages branch into `./docs`
+    git worktree add docs gh-pages
+
 doc: docresolve docpackages
 
 docresolve:

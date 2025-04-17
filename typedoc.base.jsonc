@@ -3,4 +3,26 @@
     "$schema": "https://typedoc.org/schema.json",
     "skipErrorChecking": true,
     "projectDocuments": [],
+    "highlightLanguages": [
+        "bash",
+        "console",
+        "css",
+        "html",
+        "javascript",
+        "json",
+        "jsonc",
+        "json5",
+        "yaml",
+        "tsx",
+        "typescript",
+        "ts",
+        "csv",
+        "sh",
+        "markdown",
+        "shell",
+        "rs",
+        // "bnf",
+        "toml",
+        "json"
+    ]
 }

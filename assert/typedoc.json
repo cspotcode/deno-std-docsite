@@ -1,6 +1,6 @@
 {
     "extends": [
-        "../typedoc.base.json"
+        "../typedoc.base.jsonc",
     ],
     "entryPoints": [
         "./mod.ts"
